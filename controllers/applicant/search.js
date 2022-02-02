@@ -4,7 +4,7 @@ const Jobs = require("../../models/job");
 
 exports.jobsByRecruiter = async (req, res, next) => {
     try {
-        const jobs = req.body.jobs ? Jobs : []
+        const jobs = req.body.jobs ? req.body.jobs: Jobs
         const response = { payLoad: [] }
         response.payLoad = jobs.filter( job => job.recruiterID === req.body.recruiterID) || []
         res.send(response);
@@ -16,7 +16,7 @@ exports.jobsByRecruiter = async (req, res, next) => {
 
 exports.filterJobsByJobID = async (req, res, next) => {
     try {
-        const jobs = req.body.jobs ? Jobs : []
+        const jobs = req.body.jobs ? req.body.jobs: Jobs
         const response = { payLoad: [] }
         response.payLoad = jobs.filter( job => job.id === req.body.jobID) || []
         res.send(response);
@@ -28,12 +28,10 @@ exports.filterJobsByJobID = async (req, res, next) => {
 
 exports.filterJobsByKeyword = async (req, res, next) => {
     try {
-        const jobs = req.body.jobs ? Jobs : []
+        const jobs = req.body.jobs ? req.body.jobs: Jobs
         const response = { payLoad: [] }
         const keywords = req.body.keywords ? req.body.keywords : " "
         let words = keywords.split(' ')
-        let isLocation = false
-        let isSkill = false
         const skills = new set()
         const locations = new set()
         
@@ -69,7 +67,7 @@ exports.filterJobsByKeyword = async (req, res, next) => {
 // filter job by locations
 exports.filterJobsByLocation = async (req, res, next) => {
     try {
-        const jobs = req.body.jobs ? Jobs : []
+        const jobs = req.body.jobs ? req.body.jobs: Jobs
         const response = { payLoad: [] }
         response.payLoad = jobs.filter( job => job.location == req.body.location) || []
         res.send(response);
@@ -86,7 +84,7 @@ exports.jobRecommendation = async (req, res, next) => {
         const skills = user.skills ? user.skills : []
         const response = { payLoad: [] }
         let isRecommended= false;
-        const jobs = req.body.jobs ? Jobs : []
+        const jobs = req.body.jobs ? req.body.jobs: Jobs
         for(let i=0;i<jobs.length;i++)
         {
             const job = jobs[i];

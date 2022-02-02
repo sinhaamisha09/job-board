@@ -3,9 +3,11 @@ const Applications = require("../../models/application");
 const Applicants = require("../../models/applicant");
 const Jobs = require("../../models/job");
 
+
+//apply for job 
 exports.apply = async (req, res, next) => {
     try{
-        const jobData = await Jobs.find( job => job.id === req.params.jobId);
+        const jobData = await Jobs.find( job => job.id === req.body.jobId);
         
         //if job id not found return error
         if(!jobData) 
@@ -18,7 +20,7 @@ exports.apply = async (req, res, next) => {
         
         //check if already applied
         Applications.find( (application) => 
-            application.applicantID === user._id && application.jobID === req.params.jobID,
+            application.applicantID === user._id && application.jobID === req.body.jobID,
           ).then( ( data ) => {
             if( data !== null )
             {
@@ -31,12 +33,15 @@ exports.apply = async (req, res, next) => {
         
         //apply for job
         const application = {
-            "ApplicantID": user._id,
+            "applicationID": req.body.applicationID,
             "recruiterID": jobData.recruiterID,
-            "jobId": jobData.id,
+            "applicantID": user._id,
+            "jobID": jobData.id,
             "status": "applied",
             "applyDate": new data(),
           };
+
+        //add new application in the array
         Applications.push(application)
           .then(() => {
             res.json({
@@ -52,5 +57,3 @@ exports.apply = async (req, res, next) => {
         next(err);
     }
 }
-
-// save and update 

@@ -11,11 +11,11 @@ exports.GetAppliedApplications = async (req, res, next) => {
             });
             return;
         }
-        const response =  [];
+        const response = { payLoad: [] }
         for(let i=0;i<Applications.length;i++)
         {
             if(Applications.applicantID === user._id)
-                response.list.push(Application[i])
+                response.payload.push(Application[i])
         }
         res.send(response);
     } catch (err){
@@ -34,7 +34,7 @@ exports.withdrawApplication = async (req, res, next) => {
             });
             return;
         }
-        const applicationIndex = Applications.findIndex( application => application.id !== req.params.jobID );
+        const applicationIndex = Applications.findIndex( application => application.id !== req.body.jobID );
         Applications[applicationIndex].status = "canceled"
         // if(applicationIndex !== -1){
         //     Applications.splice(applicationIndex, 1);

@@ -1,4 +1,3 @@
-const { TestWatcher } = require("jest");
 const { 
     jobsByRecruiter, 
     filterJobsByJobID, 
@@ -6,6 +5,9 @@ const {
     filterJobsByKeyword,
     jobRecommendation
 } = require("../controllers/applicant/search");
+const Jobs = require("../../models/job");
+const Recruiters = require("../../models/recruiter");
+
 
 test('Properly search for ...', () => {
     expect(jobsByRecruiter()).toEqual()

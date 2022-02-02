@@ -1,4 +1,4 @@
-export default recruiters = [
+export default Recruiters = [
     {
         "id": 11111,
         "title":"Aman Singh",
@@ -24,5 +24,4 @@ export default recruiters = [
         "title":"Ananya",
         "companyName": "Sharechat",
     }
-
 ]

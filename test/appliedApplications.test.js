@@ -2,11 +2,15 @@ const {
     GetAppliedApplications, 
     withdrawApplication 
 }= require("../controllers/applicant/appliedApplications");
+const Applications = require("../../models/application");
 
-test('Properly search for ...', () => {
+test('Properly checked applied applicaions of an applicant', () => {
+    const user = {
+        
+    }
     expect( GetAppliedApplications() ).toEqual()
 })
 
-test('Properly search for ...', () => {
+test('Properly Canceled applied applicaion of an applicant', () => {
     expect(withdrawApplication() ).toEqual()
 })

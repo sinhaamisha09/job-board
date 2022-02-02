@@ -5,6 +5,8 @@ const {
     RemoveJob,
     GetAllJobByRecruiter
 } = require("../controllers/recruiter/jobCrud");
+const Jobs = require("../../models/job");
+const Recruiters = require("../../models/recruiter");
 
 test('Properly got job by jobid', () => {
     expect( GetJob()).toEqual()

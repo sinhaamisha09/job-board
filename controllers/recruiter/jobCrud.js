@@ -29,7 +29,7 @@ exports.PostJob = async (req, res, next) => {
             return;
         }
         const job = { 
-            "id": req.params.jobID,    
+            "id": req.body.jobID,    
             "title": req.body.title,
             "companyName": req.body.companyName,
             "recruiterId": user._id,
@@ -59,9 +59,14 @@ exports.UpdateJob = async (req, res, next) => {
             });
             return;
         }
-        const jobIndex = Jobs.findIndex( job => job.id !== req.params.jobID );
-
-
+        const jobIndex = Jobs.findIndex( job => job.id !== req.body.jobID );
+        Jobs[jobIndex] = 
+        {                                 
+            "title": req.body.title ? req.body.title : Jobs[jobIndex].title ,                          //integer/string
+            "skills": req.body.title ? req.body.skills : Jobs[jobIndex].skills,                                    //array of string
+            "description" : req.body.title ? req.body.description : Jobs[jobIndex].description,                              //string
+            "location": req.body.title ? req.body.location : Jobs[jobIndex].location,             
+        }
     } catch (err){
         next(err);
     }
@@ -78,11 +83,11 @@ exports.RemoveJob = async (req, res, next) => {
             });
             return;
         }
-        const jobIndex = Jobs.findIndex( job => job.id !== req.params.jobID );
+        const jobIndex = Jobs.findIndex( job => job.id !== req.body.jobID );
         if(jobIndex !== -1){
             Jobs.splice(jobIndex, 1);
         }
-        // Jobs = Jobs.filter( job => job.id !== req.params.jobID)
+        // Jobs = Jobs.filter( job => job.id !== req.body.jobID)
         
         res.send(Jobs)
     } catch (err){
@@ -90,6 +95,7 @@ exports.RemoveJob = async (req, res, next) => {
     }
 }
 
+// get all job posted by recruiter
 exports.GetAllJobByRecruiter = async (req, res, next) => {
     try{
         const user = req.user;

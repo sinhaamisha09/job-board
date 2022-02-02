@@ -1,4 +1,4 @@
-export default applicants = [
+export default Applicants = [
     {
         "id": 111111,
         "name": "Arun Saxena",

@@ -1,3 +1,4 @@
+const { default: application } = require("../../models/application");
 const Applications = require("../../models/application");
 const Jobs = require("../../models/job");
 
@@ -13,11 +14,11 @@ exports.GetJobApplications = async (req, res, next) => {
             });
             return;
         }
-        const response =  [];
+        const response = { payLoad: [] }
         for(let i=0;i<Applications.length;i++)
         {
-            if(Applications[i].jobID === req.params.jobID && Applications.recruiterID === user._id)
-                response.list.push(Application[i])
+            if(Applications[i].jobID === req.body.jobID && Applications.recruiterID === user._id)
+                response.payload.push(Application[i])
         }
         res.send(response);
     } catch (err){
@@ -26,6 +27,9 @@ exports.GetJobApplications = async (req, res, next) => {
 }
 
 //update status of applicaions of a particular job (Recruiter)
+// if applicant skills match with job required skills set - 
+// -> application status = accepted
+// -> else application status = rejected
 exports.updateApplicationStatus = async (req, res, next) => {
     try{
         const user = req.user;
@@ -36,8 +40,14 @@ exports.updateApplicationStatus = async (req, res, next) => {
             });
             return;
         }
-        const response =  [];
-        Applications.find( (application) => application.id === req.params.applicationID && application.recruiterID === user._id)
+        const response = { payLoad: [] }
+
+        Applications.find( 
+            (application) => 
+                application.id === req.body.applicationID 
+                && 
+                application.recruiterID === user._id
+            )
             .then(
                 (data) => {
                     if (data === null) {
@@ -46,7 +56,7 @@ exports.updateApplicationStatus = async (req, res, next) => {
                       });
                       return;
                     }
-                    Jobs.find( job => job.id == data.jobID)
+                    const job = Jobs.find( job => job.id == data.jobID)
                         .then((job) => {
                             if (job === null) {
                               res.status(404).json({
@@ -56,9 +66,21 @@ exports.updateApplicationStatus = async (req, res, next) => {
                             }
                         }
                     )
+                    if(data.status === "applied" && job !== null )
+                    {
+                        const skills = job.skills;
+                        const applicantSkills = data.skills;
+                        const skillMatch = skills.filter( skill => {
+                            return applicantSkills.includes(skill);
+                        });
+
+                        if(skillMatch.length > 0)
+                            application.status = "accepted"
+                        else
+                            application.status = "rejected"
+                    }
                 }
             )
-        
         res.send(response);
     } catch (err){
         next(err);
