@@ -4,6 +4,12 @@ const Jobs = require("../../models/job");
 exports.GetJob = async (req, res, next) => {
     try{
         if(Jobs.length === 0) {
+            res.status(404).json({
+              message: "No job posted",
+            });
+            return;
+        }
+        if (user.type != "recruiter") {
             res.status(401).json({
               message: "Only recruiter can post a job",
             });

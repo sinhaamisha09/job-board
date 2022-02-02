@@ -19,7 +19,7 @@ exports.filterJobsByJobID = async (req, res, next) => {
     try {
         const jobs = req.body.jobs ? req.body.jobs: Jobs
         const response = { payLoad: [] }
-        response.payLoad = jobs.filter( job => job.id === req.body.jobID) 
+        response.payLoad = jobs.find( job => job.id === req.body.jobID) 
         res.send(response);
     } 
     catch (err) {
@@ -85,7 +85,7 @@ exports.jobRecommendation = async (req, res, next) => {
     try {
         const user = await Applicants.find( applicant =>  applicant.id === req.user._id )
         const skills = user.skills ? user.skills : []
-        const response = { payLoad: [] }
+        const response = { payload: [] }
         let isRecommended= false;
         const jobs = req.body.jobs ? req.body.jobs: Jobs
         for(let i=0;i<jobs.length;i++)
