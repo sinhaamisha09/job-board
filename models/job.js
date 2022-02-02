@@ -1,12 +1,12 @@
 export default jobs = [
     {
-        "id": 123451,
-        "title":"SDE",
-        "companyName": "CRED",
-        "recruiterID": 11111,
-        "skills": [],
-        "description" : "",
-        "location":"New York, NY, United States",
+        "id": 123451,                                   //integer/string
+        "title":"SDE",                                   //string
+        "companyName": "CRED",                           //string
+        "recruiterID": 11111,                            //integer/string
+        "skills": [],                                    //array of string
+        "description" : "",                              //string
+        "location":"New York, NY, United States",        //string
         "posted_at":"2019-01-14T10:55:28-05:00",
     },
     {

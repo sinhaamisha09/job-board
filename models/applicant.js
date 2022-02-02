@@ -23,6 +23,6 @@ export default applicants = [
         "id": 111115,
         "name": "Abhishek Singh",
         "skills": ["Web Development", "Back-end Developer"]
-    },
+    }
 
 ]

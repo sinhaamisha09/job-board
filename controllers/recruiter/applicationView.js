@@ -1,5 +1,6 @@
 const Applications = require("../../models/application");
-const { jobsByRecruiter } = require("../applicant/search");
+const Jobs = require("../../models/job");
+
 
 //view applicaions of a particular job (Recruiter)
 exports.GetJobApplications = async (req, res, next) => {
@@ -63,3 +64,6 @@ exports.updateApplicationStatus = async (req, res, next) => {
         next(err);
     }
 }
+
+
+//last function

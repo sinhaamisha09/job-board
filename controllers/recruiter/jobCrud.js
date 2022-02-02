@@ -1,7 +1,6 @@
-const Recruiters = require("../../models/recruiter");
 const Jobs = require("../../models/job");
 
-//get job by obid
+//get job by jobid
 exports.GetJob = async (req, res, next) => {
     try{
         if(Jobs.length === 0) {
@@ -40,10 +39,9 @@ exports.PostJob = async (req, res, next) => {
             "posted_at": new Date(),
          }
         Jobs.push(job)
-        .then(() => {
-        res.json({ message: "Job added successfully to the database" });
-        })
-    
+            .then(() => {
+                res.json({ message: "Job added successfully to the database" });
+            })
 
     } catch (err){
         next(err);
@@ -61,6 +59,7 @@ exports.UpdateJob = async (req, res, next) => {
             });
             return;
         }
+        const jobIndex = Jobs.findIndex( job => job.id !== req.params.jobID );
 
 
     } catch (err){
@@ -112,3 +111,6 @@ exports.GetAllJobByRecruiter = async (req, res, next) => {
         next(err);
     }
 }
+
+
+//  update
