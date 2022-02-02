@@ -1,6 +1,4 @@
-const Recruiters = require("../../models/recruiter");
 const Applications = require("../../models/application");
-const Applicants = require("../../models/applicant");
 const Jobs = require("../../models/job");
 
 
@@ -51,6 +49,7 @@ exports.apply = async (req, res, next) => {
           .catch((err) => {
             res.status(400).json(err);
           });
+
     } 
     catch (err){
         console.log(err)

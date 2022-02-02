@@ -1,12 +1,12 @@
 const Applicants = require("../../models/applicant");
 const Jobs = require("../../models/job");
 
-
+// search job by recruiterID
 exports.jobsByRecruiter = async (req, res, next) => {
     try {
         const jobs = req.body.jobs ? req.body.jobs: Jobs
         const response = { payLoad: [] }
-        response.payLoad = jobs.filter( job => job.recruiterID === req.body.recruiterID) || []
+        response.payLoad = jobs.filter( job => job.recruiterID === req.body.recruiterID)
         res.send(response);
     } 
     catch (err) {
@@ -14,11 +14,12 @@ exports.jobsByRecruiter = async (req, res, next) => {
     }
 }
 
+// filter obs by jobID
 exports.filterJobsByJobID = async (req, res, next) => {
     try {
         const jobs = req.body.jobs ? req.body.jobs: Jobs
         const response = { payLoad: [] }
-        response.payLoad = jobs.filter( job => job.id === req.body.jobID) || []
+        response.payLoad = jobs.filter( job => job.id === req.body.jobID) 
         res.send(response);
     } 
     catch (err) {
@@ -26,6 +27,7 @@ exports.filterJobsByJobID = async (req, res, next) => {
     }
 }
 
+// filter obs by keyword - location/skills
 exports.filterJobsByKeyword = async (req, res, next) => {
     try {
         const jobs = req.body.jobs ? req.body.jobs: Jobs
@@ -43,14 +45,15 @@ exports.filterJobsByKeyword = async (req, res, next) => {
             locations.add(jobs.location)
         }
 
+        // for each keywords filter jobs
         words.forEach( word => 
         {
             const sortedJob = []
             if(skills.has(word)){
-                sortedJob = jobs.filter( job => job.skills.include(word)) || []
+                sortedJob = jobs.filter( job => job.skills.include(word))
             }
             else if(locations.has(word)){
-                sortedJob = jobs.filter( job => job.id == req.body.jobID) || []
+                sortedJob = jobs.filter( job => job.id == req.body.jobID) 
             }
 
             if(sortedJob.length) 
@@ -69,7 +72,7 @@ exports.filterJobsByLocation = async (req, res, next) => {
     try {
         const jobs = req.body.jobs ? req.body.jobs: Jobs
         const response = { payLoad: [] }
-        response.payLoad = jobs.filter( job => job.location == req.body.location) || []
+        response.payLoad = jobs.filter( job => job.location == req.body.location)
         res.send(response);
     } 
     catch (err) {

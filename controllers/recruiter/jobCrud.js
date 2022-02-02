@@ -9,7 +9,8 @@ exports.GetJob = async (req, res, next) => {
             });
             return;
         }
-        const response = await Jobs.filter( (job) =>  job.id === req.jobID)
+        const response = { payLoad: [] }
+        response.payLoad = await Jobs.filter( (job) =>  job.id === req.jobID)
         res.json(response);
     } 
     catch (err){
@@ -62,9 +63,9 @@ exports.UpdateJob = async (req, res, next) => {
         const jobIndex = Jobs.findIndex( job => job.id !== req.body.jobID );
         Jobs[jobIndex] = 
         {                                 
-            "title": req.body.title ? req.body.title : Jobs[jobIndex].title ,                          //integer/string
-            "skills": req.body.title ? req.body.skills : Jobs[jobIndex].skills,                                    //array of string
-            "description" : req.body.title ? req.body.description : Jobs[jobIndex].description,                              //string
+            "title": req.body.title ? req.body.title : Jobs[jobIndex].title ,                          
+            "skills": req.body.title ? req.body.skills : Jobs[jobIndex].skills,                                     
+            "description" : req.body.title ? req.body.description : Jobs[jobIndex].description,                              
             "location": req.body.title ? req.body.location : Jobs[jobIndex].location,             
         }
     } catch (err){
@@ -89,7 +90,7 @@ exports.RemoveJob = async (req, res, next) => {
         }
         // Jobs = Jobs.filter( job => job.id !== req.body.jobID)
         
-        res.send(Jobs)
+        // res.send(Jobs)
     } catch (err){
         next(err);
     }
@@ -106,13 +107,14 @@ exports.GetAllJobByRecruiter = async (req, res, next) => {
             });
             return;
         }
-        const allJobs = Jobs.filter( (job) => job.recruiterID === user._id )
+        const response = { payLoad: [] }
+        response.payLoad = Jobs.filter( (job) => job.recruiterID === user._id )
         if ( allJobs.length == 0 ) {
             console.log('no jobs')
             return;
         }
-        res.send(allJobs);
-
+        
+        res.send(response);
     } catch (err){
         next(err);
     }
